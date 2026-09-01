@@ -79,6 +79,47 @@ input,textarea,select{width:100%;background:#0c1014;border:1px solid var(--line)
   <div class="card"><div class="actions"><button class="btn secondary" onclick="exportData()">Export</button><button class="btn secondary" onclick="document.getElementById('importFile').click()">Import</button><button class="btn danger" onclick="resetData()">Reset</button></div><input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(this)"></div>
 </section>
 
+
+<section id="nutrition" class="view">
+  <div class="hero">
+    <div class="tiny">NUTRITION</div>
+    <h1>Fuel your Arc.</h1>
+    <p>Track meals, calories and protein — ohne komplizierte Regeln.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card"><h3>🔥 Kalorien</h3><div class="big" id="calToday">0</div><div class="tiny">heute / Ziel <span id="calGoalText">–</span></div></div>
+    <div class="card"><h3>💪 Protein</h3><div class="big" id="proteinToday">0 g</div><div class="tiny">heute / Ziel <span id="proteinGoalText">–</span></div></div>
+  </div>
+
+  <div class="section-title">🎯 Deine Ziele</div>
+  <div class="card">
+    <div class="grid">
+      <div><div class="tiny" style="margin-bottom:6px">Kalorienziel</div><input id="calGoal" type="number" min="0" placeholder="z. B. 2200"></div>
+      <div><div class="tiny" style="margin-bottom:6px">Proteinziel (g)</div><input id="proteinGoal" type="number" min="0" placeholder="z. B. 150"></div>
+    </div>
+    <button class="btn" style="margin-top:12px" onclick="saveNutritionGoals()">Ziele speichern</button>
+  </div>
+
+  <div class="section-title">➕ Mahlzeit hinzufügen</div>
+  <div class="card">
+    <div class="tiny" style="margin-bottom:6px">Mahlzeit</div>
+    <select id="mealType">
+      <option>Frühstück</option><option>Mittagessen</option><option>Abendessen</option><option>Snack</option>
+    </select>
+    <div class="tiny" style="margin:12px 0 6px">Lebensmittel / Beschreibung</div>
+    <input id="foodName" placeholder="z. B. Haferflocken mit Joghurt">
+    <div class="grid" style="margin-top:12px">
+      <div><div class="tiny" style="margin-bottom:6px">Kalorien</div><input id="foodCal" type="number" min="0" placeholder="500"></div>
+      <div><div class="tiny" style="margin-bottom:6px">Protein (g)</div><input id="foodProtein" type="number" min="0" placeholder="30"></div>
+    </div>
+    <button class="btn" style="margin-top:12px;width:100%" onclick="addMeal()">Mahlzeit speichern</button>
+  </div>
+
+  <div class="section-title">Heute gegessen</div>
+  <div class="card" id="mealList"></div>
+</section>
+
 <section id="more" class="view">
   <div class="hero"><h1>Arc Tools</h1><p>Alles, was du brauchst, um den Prozess durchzuziehen.</p></div>
   <div class="section-title">🏋️ Workout</div>
@@ -95,6 +136,7 @@ input,textarea,select{width:100%;background:#0c1014;border:1px solid var(--line)
 <button onclick="show('plan',this)"><span class="ico">✓</span>Plan</button>
 <button onclick="show('streaks',this)"><span class="ico">🔥</span>Streak</button>
 <button onclick="show('stats',this)"><span class="ico">◒</span>Stats</button>
+<button onclick="show('nutrition',this)"><span class="ico">🥗</span>Food</button>
 <button onclick="show('more',this)"><span class="ico">✦</span>Tools</button>
 </nav>
 
@@ -109,10 +151,11 @@ const defaultTasks=[
  {id:'sleep',name:'7–9 Std. Schlaf',meta:'Regeneration',xp:20}
 ];
 const quotes=['Disziplin ist stärker als Motivation.','Du musst nicht perfekt sein. Nur konsequent.','Ein schlechter Tag ist kein schlechter Arc.','Mach es für dein zukünftiges Ich.','Heute ist ein guter Tag, um stärker zu werden.'];
-let data=JSON.parse(localStorage.getItem(KEY)||'null')||{start:null,days:{},waterTotal:0,workouts:0,journals:0,name:'',xp:0};
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{start:null,days:{},waterTotal:0,workouts:0,journals:0,name:'',xp:0,nutritionGoals:{calories:0,protein:0},meals:{}};
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','\"':'&quot;'}[c]))}
 function save(){localStorage.setItem(KEY,JSON.stringify(data))}
 function today(){return new Date().toISOString().slice(0,10)}
-function ensure(){if(!data.start)data.start=today();if(!data.days[today()])data.days[today()]={tasks:{},water:0,sleep:0,workout:false,journal:''}}
+function ensure(){if(!data.start)data.start=today();if(!data.days[today()])data.days[today()]={tasks:{},water:0,sleep:0,workout:false,journal:''};if(!data.meals)data.meals={};if(!data.meals[today()])data.meals[today()]=[]}
 function dayIndex(){ensure();let a=new Date(data.start+'T00:00:00'),b=new Date(today()+'T00:00:00');return Math.max(1,Math.min(90,Math.floor((b-a)/86400000)+1))}
 function tasks(){return defaultTasks}
 function completedCount(){return tasks().filter(t=>data.days[today()].tasks[t.id]).length}
@@ -124,6 +167,32 @@ function addWater(){ensure();if(data.days[today()].water<8){data.days[today()].w
 function saveSleep(){ensure();let v=Number(document.getElementById('sleepInput').value);data.days[today()].sleep=v;save();toast('Schlaf gespeichert');render()}
 function toggleWorkout(){ensure();let x=data.days[today()].workout;if(!x){data.days[today()].workout=true;data.workouts++;data.xp+=50;data.days[today()].tasks.workout=true}else{data.days[today()].workout=false;data.workouts=Math.max(0,data.workouts-1);data.xp=Math.max(0,data.xp-50);data.days[today()].tasks.workout=false}save();render()}
 function saveJournal(){ensure();let v=document.getElementById('journal').value.trim();if(v&&!data.days[today()].journal){data.journals++;data.xp+=20}data.days[today()].journal=v;save();toast('Journal gespeichert ✍️');render()}
+
+function saveNutritionGoals(){
+  const c=Math.max(0,Number(document.getElementById('calGoal').value)||0);
+  const pr=Math.max(0,Number(document.getElementById('proteinGoal').value)||0);
+  data.nutritionGoals={calories:c,protein:pr};save();toast('Ernährungsziele gespeichert');render();
+}
+function addMeal(){
+  ensure();
+  const name=document.getElementById('foodName').value.trim();
+  const type=document.getElementById('mealType').value;
+  const calories=Math.max(0,Number(document.getElementById('foodCal').value)||0);
+  const protein=Math.max(0,Number(document.getElementById('foodProtein').value)||0);
+  if(!name){toast('Bitte Lebensmittel eingeben');return}
+  data.meals[today()].push({id:Date.now(),type,name,calories,protein});
+  data.xp+=10;save();
+  document.getElementById('foodName').value='';document.getElementById('foodCal').value='';document.getElementById('foodProtein').value='';
+  toast('+10 XP 🍽️');render();
+}
+function deleteMeal(id){
+  ensure();const i=data.meals[today()].findIndex(m=>m.id===id);
+  if(i>=0){data.meals[today()].splice(i,1);save();render();toast('Mahlzeit gelöscht')}
+}
+function nutritionTotals(){
+  ensure();return data.meals[today()].reduce((a,m)=>({cal:a.cal+(Number(m.calories)||0),protein:a.protein+(Number(m.protein)||0)}),{cal:0,protein:0});
+}
+
 function saveName(){data.name=document.getElementById('nameInput').value.trim();save();toast('Profil gespeichert');render()}
 function level(){return Math.floor(data.xp/100)+1}
 function toast(s){let t=document.getElementById('toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600)}
@@ -144,6 +213,16 @@ function render(){
  document.getElementById('workoutBtn').textContent=data.days[today()].workout?'✓ Workout erledigt':' + Workout';
  document.getElementById('badges').innerHTML=[['🔥','3 Tage',st>=3],['⚡','7 Tage',st>=7],['🏆','30 Tage',st>=30],['👑','90 Tage',st>=90]].map(x=>`<span class="badge" style="opacity:${x[2]?1:.35}">${x[0]} ${x[1]}</span>`).join('');
  let cal='';for(let i=1;i<=90;i++){let d=new Date(data.start+'T00:00:00');d.setDate(d.getDate()+i-1);let k=d.toISOString().slice(0,10),doneDay=data.days[k]&&Object.values(data.days[k].tasks||{}).some(Boolean);cal+=`<div class="dot ${doneDay?'done':''} ${i===idx?'today':''}" title="Tag ${i}"></div>`}document.getElementById('calendar').innerHTML=cal;
+
+ const nt=nutritionTotals(), ng=data.nutritionGoals||{calories:0,protein:0};
+ document.getElementById('calToday').textContent=nt.cal;
+ document.getElementById('proteinToday').textContent=nt.protein+' g';
+ document.getElementById('calGoalText').textContent=ng.calories||'–';
+ document.getElementById('proteinGoalText').textContent=(ng.protein||'–')+(ng.protein?' g':'');
+ document.getElementById('calGoal').value=ng.calories||'';
+ document.getElementById('proteinGoal').value=ng.protein||'';
+ const meals=data.meals[today()]||[];
+ document.getElementById('mealList').innerHTML=meals.length?meals.map(m=>`<div class="task"><div style="flex:1"><div class="taskname">${escapeHtml(m.name)}</div><div class="taskmeta">${escapeHtml(m.type)} · ${m.calories} kcal · ${m.protein} g Protein</div></div><button class="btn danger" onclick="deleteMeal(${m.id})">×</button></div>`).join(''):'<div class="tiny">Noch keine Mahlzeiten eingetragen.</div>';
 }
 ensure();save();render();if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>

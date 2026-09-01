@@ -1,7 +1,12 @@
-# WINTER ARC 3.0
+# WINTER ARC 3.1
 
-Mobile-first 90-day PWA. Upload the contents of this folder to the root of a GitHub Pages repository.
+Neue Ernährung:
+- Mahlzeiten (Frühstück, Mittagessen, Abendessen, Snack)
+- Lebensmittelbeschreibung
+- Kalorien und Protein pro Mahlzeit
+- tägliche Kalorien-/Proteinübersicht
+- eigene Ziele
+- Mahlzeiten löschen
+- +10 XP pro gespeicherter Mahlzeit
 
-Features: 90-day progress, daily tasks, streaks, XP/levels, water, sleep, workouts, journal, achievements, stats, export/import and offline cache.
-
-All personal data is stored locally in the browser via localStorage.
+Alle Daten bleiben lokal im Browser (localStorage).

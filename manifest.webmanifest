@@ -1,11 +1,11 @@
 {
-  "name": "WINTER ARC 3.0",
+  "name": "WINTER ARC 3.1",
   "short_name": "Winter Arc",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#080a0d",
   "theme_color": "#0b0d10",
-  "description": "90-Tage-Winter-Arc Challenge",
+  "description": "90-Tage-Winter-Arc mit Tagesplan, Streaks, Stats und Ernährungs-Tracker.",
   "icons": [
     {
       "src": "icons/icon-192.png",
