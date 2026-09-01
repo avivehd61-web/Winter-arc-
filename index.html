@@ -3,91 +3,148 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#090b10">
+<meta name="theme-color" content="#0b0d10">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Winter Arc">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>WINTER ARC</title>
+<title>WINTER ARC 3.0</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#080a0f;color:#f4f7fb;font-family:Inter,system-ui,-apple-system,sans-serif}
-button{font:inherit}.app{max-width:720px;margin:auto;min-height:100vh;padding-bottom:92px}
-.top{padding:20px 18px 10px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(8,10,15,.88);backdrop-filter:blur(14px);z-index:5}
-.brand{font-weight:900;letter-spacing:.16em}.brand i{color:#a8dcff;font-style:normal}.date{font-size:12px;color:#8994a4}
-main{padding:8px 16px}.screen{display:none}.screen.on{display:block}.hero{padding:28px 4px 18px}
-.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:#a8dcff;font-weight:800}
-.hero h1{font-size:45px;line-height:.95;letter-spacing:-.05em;margin:10px 0}.muted{color:#8994a4}
-.card{background:linear-gradient(145deg,#12161f,#0e1118);border:1px solid #252e3a;border-radius:20px;padding:18px;margin-bottom:14px}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.big{font-size:35px;font-weight:900}
-.progress{height:9px;border-radius:99px;background:#222a35;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#8bcfff,#d5f4ff);width:0;transition:.3s}
-.task{display:flex;gap:12px;align-items:center;padding:15px 0;border-bottom:1px solid #252e3a;cursor:pointer}.task:last-child{border:0}
-.check{width:24px;height:24px;border:1px solid #485568;border-radius:8px;display:grid;place-items:center}.done .check{background:#a8e6c1;color:#07100c;border-color:#a8e6c1}.done .name{text-decoration:line-through;color:#7d8796}
-.btn{border:1px solid #303a48;background:#171c25;color:#f4f7fb;padding:11px 14px;border-radius:12px;cursor:pointer}.primary{background:#a8dcff;color:#071017;border-color:#a8dcff;font-weight:800}
-.days{display:grid;grid-template-columns:repeat(15,1fr);gap:5px;margin-top:14px}.day{aspect-ratio:1;background:#202732;border-radius:5px}.day.done{background:#a8dcff}.day.now{outline:2px solid #fff;outline-offset:1px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stat{font-size:27px;font-weight:900}.label{font-size:12px;color:#8994a4;margin-top:3px}
-.barrow{height:100px;display:flex;align-items:end;gap:5px}.bar{flex:1;background:#29313d;border-radius:5px 5px 2px 2px}.bar.hot{background:#a8dcff}
-.nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:min(680px,calc(100% - 24px));padding:7px;background:rgba(18,22,31,.94);border:1px solid #2a3441;border-radius:18px;display:flex;z-index:10;backdrop-filter:blur(15px)}
-.nav button{flex:1;background:none;border:0;color:#8994a4;padding:10px 4px;border-radius:12px;font-size:12px}.nav button.on{background:#222a35;color:#fff}
-.note{font-size:12px;line-height:1.5}@media(max-width:520px){.hero h1{font-size:39px}.grid{grid-template-columns:1fr}.days{grid-template-columns:repeat(10,1fr)}}
+:root{--bg:#080a0d;--card:#11151a;--card2:#171c22;--text:#f5f7fa;--muted:#8d98a5;--line:#252d36;--accent:#dff5ff;--accent2:#7dd3fc;--green:#86efac;--orange:#fbbf24;--red:#fb7185;--shadow:0 14px 40px #0008}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#1a2731 0,#080a0d 40%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Inter,Arial,sans-serif;min-height:100vh}
+button,input,textarea,select{font:inherit}button{border:0;color:inherit}.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) 16px calc(92px + env(safe-area-inset-bottom))}
+header{padding:20px 4px 12px;display:flex;justify-content:space-between;align-items:center}.brand{font-weight:900;letter-spacing:2px;font-size:18px}.day{color:var(--muted);font-size:12px;margin-top:4px}.avatar{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#dff5ff,#64748b);color:#071018;display:grid;place-items:center;font-weight:900}
+.view{display:none}.view.active{display:block}.hero{padding:20px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(145deg,#151b21,#0e1217);box-shadow:var(--shadow);margin:8px 0 16px}.hero h1{margin:0 0 7px;font-size:32px}.hero p{margin:0;color:var(--muted)}
+.progress{height:11px;background:#202831;border-radius:99px;overflow:hidden;margin:16px 0 9px}.bar{height:100%;width:0;background:linear-gradient(90deg,#f8fafc,#7dd3fc);border-radius:inherit;transition:.35s}.row{display:flex;justify-content:space-between;gap:12px;align-items:center}.tiny{font-size:12px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px}.card h3{margin:0 0 8px;font-size:14px}.big{font-size:28px;font-weight:850}.section-title{margin:22px 3px 10px;font-size:16px}
+.task{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.check{width:27px;height:27px;border-radius:9px;border:1px solid #39434e;background:#0d1115;display:grid;place-items:center;flex:none;cursor:pointer}.check.done{background:#e2f7ff;color:#071018;border-color:#e2f7ff}.task.done .taskname{text-decoration:line-through;color:#66717d}.taskname{font-weight:700}.taskmeta{font-size:11px;color:var(--muted);margin-top:3px}
+.btn{background:#edf8ff;color:#071018;border-radius:13px;padding:11px 14px;font-weight:800;cursor:pointer}.btn.secondary{background:#1b222a;color:#e8eef3;border:1px solid var(--line)}.btn.danger{background:#2a151a;color:#fecdd3}.actions{display:flex;gap:8px;flex-wrap:wrap}
+input,textarea,select{width:100%;background:#0c1014;border:1px solid var(--line);border-radius:13px;color:var(--text);padding:12px;outline:none}textarea{min-height:130px;resize:vertical}
+.statbar{height:10px;background:#202831;border-radius:99px;overflow:hidden}.statbar span{display:block;height:100%;background:var(--accent2);border-radius:inherit}.streak{font-size:48px;font-weight:900;line-height:1}.flame{font-size:38px}.calendar{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}.dot{aspect-ratio:1;border-radius:5px;background:#202831}.dot.done{background:#e5f7ff}.dot.today{outline:2px solid #7dd3fc;outline-offset:2px}
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:5;background:#0b0e12ee;backdrop-filter:blur(18px);border-top:1px solid var(--line);padding:9px max(10px,calc((100vw - 760px)/2)) calc(9px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.nav button{background:transparent;color:#71808e;padding:8px 3px;border-radius:13px;font-size:10px;cursor:pointer}.nav button.active{background:#171d24;color:#fff}.nav .ico{font-size:19px;display:block;margin-bottom:2px}
+.badge{display:inline-flex;align-items:center;gap:6px;background:#172027;border:1px solid var(--line);padding:7px 10px;border-radius:99px;font-size:12px;margin:3px}
+.toast{position:fixed;top:20px;left:50%;transform:translate(-50%,-120px);background:#edf8ff;color:#071018;padding:12px 16px;border-radius:13px;font-weight:800;z-index:20;transition:.3s;box-shadow:var(--shadow)}.toast.show{transform:translate(-50%,0)}
+.modal{position:fixed;inset:0;background:#000b;z-index:10;display:none;align-items:flex-end}.modal.show{display:flex}.sheet{width:100%;max-width:760px;margin:auto;background:#11151a;border:1px solid var(--line);border-radius:25px 25px 0 0;padding:20px}.sheet h2{margin-top:0}
+@media(min-width:700px){.nav{left:50%;right:auto;width:760px;transform:translateX(-50%);border:1px solid var(--line);border-radius:20px 20px 0 0}.app{padding-bottom:110px}}
 </style>
 </head>
 <body>
-<div class="app">
-<div class="top"><div class="brand">WINTER <i>ARC</i></div><div class="date" id="date"></div></div>
-<main>
-<section class="screen on" id="home">
-<div class="hero"><div class="eyebrow">Day <b id="day">1</b> / 90</div><h1>Build quietly.<br>Become loudly.</h1><div class="muted">Dein 90-Tage-System für Fokus, Bewegung, Lernen und Reflexion.</div></div>
-<div class="card"><div class="row"><div><b>90-Tage-Fortschritt</b><div class="muted" style="font-size:12px;margin-top:4px">Langfristig denken. Heute handeln.</div></div><b id="pct">1%</b></div><div class="progress" style="margin-top:15px"><div class="fill" id="arcFill"></div></div><div class="days" id="days"></div></div>
-<div class="grid"><div class="card"><div class="stat" id="streak">0</div><div class="label">Streak-Tage</div></div><div class="card"><div class="stat" id="cons">0%</div><div class="label">Konsistenz</div></div></div>
-<div class="card"><div class="row"><b>Heute</b><span class="muted" id="count">0 / 4</span></div><div id="homeTasks"></div></div>
-<button class="btn primary" style="width:100%" onclick="show('plan')">Tagesplan öffnen →</button>
+<div id="toast" class="toast"></div>
+<main class="app">
+<header><div><div class="brand">WINTER ARC <span style="color:#7dd3fc">3.0</span></div><div class="day" id="dateLabel"></div></div><div class="avatar" id="avatar">A</div></header>
+
+<section id="home" class="view active">
+  <div class="hero">
+    <div class="row"><div><div class="tiny">DAY</div><h1 id="dayNum">1 / 90</h1></div><div class="flame">🔥</div></div>
+    <p id="quote">Disziplin ist stärker als Motivation.</p>
+    <div class="progress"><div class="bar" id="mainBar"></div></div>
+    <div class="row"><span class="tiny" id="progressText">0% abgeschlossen</span><b id="xpText">0 XP</b></div>
+  </div>
+  <div class="grid">
+    <div class="card"><h3>🔥 Streak</h3><div class="big" id="streakHome">0</div><div class="tiny">Tage in Folge</div></div>
+    <div class="card"><h3>🏆 Level</h3><div class="big" id="level">1</div><div class="tiny" id="levelText">0 / 100 XP</div></div>
+    <div class="card"><h3>💧 Wasser</h3><div class="big" id="waterHome">0/8</div><div class="tiny">Gläser heute</div></div>
+    <div class="card"><h3>✅ Heute</h3><div class="big" id="doneHome">0/0</div><div class="tiny">Aufgaben erledigt</div></div>
+  </div>
+  <div class="section-title">Heute fokussieren</div>
+  <div class="card"><div id="homeTasks"></div></div>
 </section>
 
-<section class="screen" id="plan">
-<div class="hero"><div class="eyebrow">Daily Plan</div><h1>Heute zählt.</h1><div class="muted">Vier sinnvolle Aufgaben. Kein Perfektionsdruck.</div></div>
-<div class="card"><div class="row"><b>Deine Kernziele</b><button class="btn" onclick="resetDay()">Zurücksetzen</button></div><div id="tasks"></div>
-<div style="margin-top:15px"><div class="row"><span class="muted" style="font-size:12px">Tagesfortschritt</span><b id="taskPct">0%</b></div><div class="progress" style="margin-top:8px"><div class="fill" id="taskFill"></div></div></div></div>
-<div class="card"><b>Abend-Check</b><p class="muted note">Was lief heute gut? Was ist morgen der eine wichtigste Schritt?</p><button class="btn" onclick="saveReflection()">Reflexion speichern</button></div>
+<section id="plan" class="view">
+  <div class="hero"><h1>Tagesplan</h1><p>Dein heutiger Standard. Kleine Siege, jeden Tag.</p></div>
+  <div class="card"><div id="planTasks"></div></div>
+  <div class="section-title">💧 Wasser</div>
+  <div class="card"><div class="row"><div><div class="big" id="waterBig">0 / 8</div><div class="tiny">Ziel: 8 Gläser</div></div><button class="btn" onclick="addWater()">+ Glas</button></div><div class="progress"><div class="bar" id="waterBar"></div></div></div>
+  <div class="section-title">💤 Schlaf</div>
+  <div class="card"><div class="row"><input id="sleepInput" type="number" min="0" max="14" step=".5" placeholder="Stunden"><button class="btn" onclick="saveSleep()">Speichern</button></div><div class="tiny" id="sleepSaved"></div></div>
 </section>
 
-<section class="screen" id="streaks">
-<div class="hero"><div class="eyebrow">Consistency</div><h1>Momentum.</h1><div class="muted">Eine verpasste Aufgabe löscht nicht deinen bisherigen Fortschritt.</div></div>
-<div class="grid"><div class="card"><div class="stat" id="s1">0</div><div class="label">Aktuelle Streak</div></div><div class="card"><div class="stat">7</div><div class="label">Bestwert</div></div></div>
-<div class="card"><b>Letzte 14 Tage</b><div class="barrow" id="bars" style="margin-top:15px"></div></div>
+<section id="streaks" class="view">
+  <div class="hero"><div class="tiny">CURRENT STREAK</div><div class="streak" id="streakBig">0</div><p>Tage. Nicht brechen.</p></div>
+  <div class="section-title">🔥 Meilensteine</div><div class="card" id="badges"></div>
+  <div class="section-title">90-Tage-Map</div><div class="card"><div class="calendar" id="calendar"></div></div>
 </section>
 
-<section class="screen" id="stats">
-<div class="hero"><div class="eyebrow">Analytics</div><h1>Deine Zahlen.</h1><div class="muted">Fortschritt sichtbar machen, ohne dich daran zu messen.</div></div>
-<div class="grid"><div class="card"><div class="stat" id="allTasks">0</div><div class="label">Aufgaben erledigt</div></div><div class="card"><div class="stat" id="daysDone">0 / 90</div><div class="label">Arc-Tage</div></div></div>
-<div class="card"><div class="row"><b>90-Tage-Arc</b><b id="spct">1%</b></div><div class="progress" style="margin-top:14px"><div class="fill" id="sfill"></div></div><p class="muted note">Der Maßstab ist dein eigener Fortschritt.</p></div>
-<div class="card"><b>Design-Prinzip</b><p class="muted note">Keine extremen Regeln, kein „alles oder nichts“. Das Ziel ist eine nachhaltige Routine.</p></div>
+<section id="stats" class="view">
+  <div class="hero"><h1>Stats</h1><p>Deine Entwicklung auf einen Blick.</p></div>
+  <div class="grid">
+    <div class="card"><h3>Aufgaben</h3><div class="big" id="statTasks">0</div><div class="tiny">gesamt erledigt</div></div>
+    <div class="card"><h3>Wasser</h3><div class="big" id="statWater">0</div><div class="tiny">Gläser gesamt</div></div>
+    <div class="card"><h3>Workouts</h3><div class="big" id="statWorkout">0</div><div class="tiny">Workouts</div></div>
+    <div class="card"><h3>Journal</h3><div class="big" id="statJournal">0</div><div class="tiny">Einträge</div></div>
+  </div>
+  <div class="section-title">📈 90-Tage-Fortschritt</div>
+  <div class="card"><div class="row"><b id="statPercent">0%</b><span class="tiny">Tage geschafft</span></div><div class="statbar" style="margin-top:12px"><span id="statProgress"></span></div></div>
+  <div class="section-title">💾 Daten</div>
+  <div class="card"><div class="actions"><button class="btn secondary" onclick="exportData()">Export</button><button class="btn secondary" onclick="document.getElementById('importFile').click()">Import</button><button class="btn danger" onclick="resetData()">Reset</button></div><input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(this)"></div>
+</section>
+
+<section id="more" class="view">
+  <div class="hero"><h1>Arc Tools</h1><p>Alles, was du brauchst, um den Prozess durchzuziehen.</p></div>
+  <div class="section-title">🏋️ Workout</div>
+  <div class="card"><div class="row"><div><b>Workout erledigt?</b><div class="tiny">+50 XP</div></div><button class="btn" id="workoutBtn" onclick="toggleWorkout()">+ Workout</button></div></div>
+  <div class="section-title">📖 Journal</div>
+  <div class="card"><textarea id="journal" placeholder="Was lief heute gut? Was verbesserst du morgen?"></textarea><div class="actions" style="margin-top:10px"><button class="btn" onclick="saveJournal()">Eintrag speichern</button></div></div>
+  <div class="section-title">⚙️ Profil</div>
+  <div class="card"><div class="tiny" style="margin-bottom:6px">Name</div><div class="row"><input id="nameInput" placeholder="Dein Name"><button class="btn" onclick="saveName()">Speichern</button></div><div class="tiny" style="margin-top:12px">Die Daten bleiben auf deinem Gerät gespeichert.</div></div>
 </section>
 </main>
-<nav class="nav"><button class="on" data-s="home">⌂<br>Start</button><button data-s="plan">✓<br>Plan</button><button data-s="streaks">🔥<br>Streaks</button><button data-s="stats">◒<br>Stats</button></nav>
-</div>
+
+<nav class="nav">
+<button class="active" onclick="show('home',this)"><span class="ico">⌂</span>Home</button>
+<button onclick="show('plan',this)"><span class="ico">✓</span>Plan</button>
+<button onclick="show('streaks',this)"><span class="ico">🔥</span>Streak</button>
+<button onclick="show('stats',this)"><span class="ico">◒</span>Stats</button>
+<button onclick="show('more',this)"><span class="ico">✦</span>Tools</button>
+</nav>
+
 <script>
-const K='winterArcV2';let S=JSON.parse(localStorage.getItem(K)||'{"tasks":[false,false,false,false],"days":0,"reflections":0}');
-const N=['30 Min. Lernen','Bewegung / Sport','10 Seiten lesen','Abendlicher Check-in'],D=['Fokusblock ohne Ablenkung','Etwas Bewegung, das dir guttut','Offline-Zeit für deinen Kopf','Kurz reflektieren und morgen planen'];
-document.getElementById('date').textContent=new Date().toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'});
-function save(){localStorage.setItem(K,JSON.stringify(S))}
-function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('on',x.id===id));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('on',x.dataset.s===id))}
-document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.s));
-function toggle(i){S.tasks[i]=!S.tasks[i];save();render()}
-function resetDay(){S.tasks=[false,false,false,false];save();render()}
-function saveReflection(){S.reflections++;save();alert('Reflexion gespeichert.')}
+const KEY='winter_arc_v3';
+const defaultTasks=[
+ {id:'wake',name:'Früh aufstehen',meta:'Routine starten',xp:20},
+ {id:'water',name:'8 Gläser Wasser',meta:'Hydration',xp:20},
+ {id:'workout',name:'Workout',meta:'Bewegung & Kraft',xp:50},
+ {id:'read',name:'20 Min. Lesen',meta:'Mindset',xp:20},
+ {id:'journal',name:'Journal',meta:'Reflexion',xp:20},
+ {id:'sleep',name:'7–9 Std. Schlaf',meta:'Regeneration',xp:20}
+];
+const quotes=['Disziplin ist stärker als Motivation.','Du musst nicht perfekt sein. Nur konsequent.','Ein schlechter Tag ist kein schlechter Arc.','Mach es für dein zukünftiges Ich.','Heute ist ein guter Tag, um stärker zu werden.'];
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||{start:null,days:{},waterTotal:0,workouts:0,journals:0,name:'',xp:0};
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function today(){return new Date().toISOString().slice(0,10)}
+function ensure(){if(!data.start)data.start=today();if(!data.days[today()])data.days[today()]={tasks:{},water:0,sleep:0,workout:false,journal:''}}
+function dayIndex(){ensure();let a=new Date(data.start+'T00:00:00'),b=new Date(today()+'T00:00:00');return Math.max(1,Math.min(90,Math.floor((b-a)/86400000)+1))}
+function tasks(){return defaultTasks}
+function completedCount(){return tasks().filter(t=>data.days[today()].tasks[t.id]).length}
+function streak(){let s=0,d=new Date();for(let i=0;i<90;i++){let k=d.toISOString().slice(0,10),x=data.days[k];if(!x||Object.keys(x.tasks||{}).length===0)break;s++;d.setDate(d.getDate()-1)}return s}
+function show(id,btn){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render()}
+function toggleTask(id){ensure();let x=data.days[today()].tasks[id];data.days[today()].tasks[id]=!x;data.xp+=(x?-defaultTasks.find(t=>t.id===id).xp:defaultTasks.find(t=>t.id===id).xp);save();toast(x?'Aufgabe zurückgesetzt':'+ XP — stark!');render()}
+function renderTasks(el){el.innerHTML=tasks().map(t=>{let done=!!data.days[today()].tasks[t.id];return `<div class="task ${done?'done':''}"><button class="check ${done?'done':''}" onclick="toggleTask('${t.id}')">${done?'✓':''}</button><div><div class="taskname">${t.name}</div><div class="taskmeta">${t.meta} · +${t.xp} XP</div></div></div>`}).join('')}
+function addWater(){ensure();if(data.days[today()].water<8){data.days[today()].water++;data.waterTotal++;data.xp+=5;save();toast('+5 XP 💧');render()}}
+function saveSleep(){ensure();let v=Number(document.getElementById('sleepInput').value);data.days[today()].sleep=v;save();toast('Schlaf gespeichert');render()}
+function toggleWorkout(){ensure();let x=data.days[today()].workout;if(!x){data.days[today()].workout=true;data.workouts++;data.xp+=50;data.days[today()].tasks.workout=true}else{data.days[today()].workout=false;data.workouts=Math.max(0,data.workouts-1);data.xp=Math.max(0,data.xp-50);data.days[today()].tasks.workout=false}save();render()}
+function saveJournal(){ensure();let v=document.getElementById('journal').value.trim();if(v&&!data.days[today()].journal){data.journals++;data.xp+=20}data.days[today()].journal=v;save();toast('Journal gespeichert ✍️');render()}
+function saveName(){data.name=document.getElementById('nameInput').value.trim();save();toast('Profil gespeichert');render()}
+function level(){return Math.floor(data.xp/100)+1}
+function toast(s){let t=document.getElementById('toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600)}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='winter-arc-backup.json';a.click()}
+function importData(inp){let f=inp.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);save();render();toast('Import erfolgreich')}catch(e){toast('Datei ungültig')}};r.readAsText(f)}
+function resetData(){if(confirm('Wirklich alle Daten löschen?')){localStorage.removeItem(KEY);location.reload()}}
 function render(){
- const done=S.tasks.filter(Boolean).length,p=Math.max(1,Math.round(S.days/90*100));
- document.getElementById('day').textContent=Math.min(90,S.days+1);document.getElementById('pct').textContent=p+'%';document.getElementById('arcFill').style.width=p+'%';
- document.getElementById('streak').textContent=S.days;document.getElementById('s1').textContent=S.days;document.getElementById('cons').textContent=Math.round(S.days/Math.max(1,S.days+1)*100)+'%';
- document.getElementById('count').textContent=done+' / 4';document.getElementById('taskPct').textContent=Math.round(done/4*100)+'%';document.getElementById('taskFill').style.width=done/4*100+'%';
- document.getElementById('allTasks').textContent=S.days*4+done;document.getElementById('daysDone').textContent=S.days+' / 90';document.getElementById('spct').textContent=p+'%';document.getElementById('sfill').style.width=p+'%';
- document.getElementById('days').innerHTML=Array.from({length:90},(_,i)=>`<div class="day ${i<S.days?'done':''} ${i===S.days?'now':''}></div>`).join('');
- const tasks=N.map((n,i)=>`<div class="task ${S.tasks[i]?'done':''}" onclick="toggle(${i})"><div class="check">${S.tasks[i]?'✓':''}</div><div><b class="name">${n}</b><div class="muted" style="font-size:11px;margin-top:3px">${D[i]}</div></div></div>`).join('');
- document.getElementById('tasks').innerHTML=tasks;document.getElementById('homeTasks').innerHTML=tasks;
- document.getElementById('bars').innerHTML=Array.from({length:14},(_,i)=>`<div class="bar ${i>=14-Math.min(14,S.days)?'hot':''}" style="height:${20+(i*23)%75}%"></div>`).join('');
- if(done===4 && !S.asked){S.asked=true;save();setTimeout(()=>{if(confirm('Alle 4 Aufgaben sind erledigt. Tag abschließen?')){S.days=Math.min(90,S.days+1);S.tasks=[false,false,false,false];S.asked=false;save();render()}else{S.asked=false;save()}},100)}
+ ensure();let idx=dayIndex(),done=completedCount(),pct=Math.round(idx/90*100),st=streak(),lvl=level(),inside=data.xp%100;
+ document.getElementById('dateLabel').textContent=new Intl.DateTimeFormat('de-DE',{weekday:'long',day:'numeric',month:'long'}).format(new Date());
+ document.getElementById('dayNum').textContent=`${idx} / 90`;document.getElementById('mainBar').style.width=pct+'%';document.getElementById('progressText').textContent=`${pct}% des Arcs`;document.getElementById('xpText').textContent=data.xp+' XP';
+ document.getElementById('streakHome').textContent=st;document.getElementById('level').textContent=lvl;document.getElementById('levelText').textContent=`${inside} / 100 XP`;document.getElementById('waterHome').textContent=`${data.days[today()].water}/8`;document.getElementById('doneHome').textContent=`${done}/${tasks().length}`;
+ document.getElementById('quote').textContent=quotes[(idx-1)%quotes.length];renderTasks(document.getElementById('homeTasks'));renderTasks(document.getElementById('planTasks'));
+ document.getElementById('waterBig').textContent=`${data.days[today()].water} / 8`;document.getElementById('waterBar').style.width=Math.min(100,data.days[today()].water/8*100)+'%';
+ document.getElementById('sleepInput').value=data.days[today()].sleep||'';document.getElementById('sleepSaved').textContent=data.days[today()].sleep?`Heute: ${data.days[today()].sleep} Stunden`:'';
+ document.getElementById('streakBig').textContent=st;document.getElementById('nameInput').value=data.name||'';document.getElementById('avatar').textContent=(data.name||'A').slice(0,1).toUpperCase();
+ document.getElementById('journal').value=data.days[today()].journal||'';document.getElementById('statTasks').textContent=Object.values(data.days).reduce((n,d)=>n+Object.values(d.tasks||{}).filter(Boolean).length,0);
+ document.getElementById('statWater').textContent=data.waterTotal;document.getElementById('statWorkout').textContent=data.workouts;document.getElementById('statJournal').textContent=data.journals;document.getElementById('statPercent').textContent=pct+'%';document.getElementById('statProgress').style.width=pct+'%';
+ document.getElementById('workoutBtn').textContent=data.days[today()].workout?'✓ Workout erledigt':' + Workout';
+ document.getElementById('badges').innerHTML=[['🔥','3 Tage',st>=3],['⚡','7 Tage',st>=7],['🏆','30 Tage',st>=30],['👑','90 Tage',st>=90]].map(x=>`<span class="badge" style="opacity:${x[2]?1:.35}">${x[0]} ${x[1]}</span>`).join('');
+ let cal='';for(let i=1;i<=90;i++){let d=new Date(data.start+'T00:00:00');d.setDate(d.getDate()+i-1);let k=d.toISOString().slice(0,10),doneDay=data.days[k]&&Object.values(data.days[k].tasks||{}).some(Boolean);cal+=`<div class="dot ${doneDay?'done':''} ${i===idx?'today':''}" title="Tag ${i}"></div>`}document.getElementById('calendar').innerHTML=cal;
 }
-render();
-if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));
+ensure();save();render();if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body></html>
