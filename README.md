@@ -1,12 +1,2 @@
-# WINTER ARC 3.1
-
-Neue Ernährung:
-- Mahlzeiten (Frühstück, Mittagessen, Abendessen, Snack)
-- Lebensmittelbeschreibung
-- Kalorien und Protein pro Mahlzeit
-- tägliche Kalorien-/Proteinübersicht
-- eigene Ziele
-- Mahlzeiten löschen
-- +10 XP pro gespeicherter Mahlzeit
-
-Alle Daten bleiben lokal im Browser (localStorage).
+# WINTER ARC 3.2
+Neue Features: Achievements, Dashboard mit 7-Tage-Übersicht, Workout-Tracker. Food, Streaks, XP, 90-Tage-Arc und Tools bleiben erhalten.

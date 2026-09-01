@@ -3,58 +3,112 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0f14">
+<meta name="theme-color" content="#080b10">
 <link rel="manifest" href="manifest.webmanifest">
-<title>WINTER ARC 3.1</title>
+<title>WINTER ARC 3.2</title>
 <style>
-:root{--bg:#070a0f;--card:#11161e;--line:#29313d;--text:#f5f7fb;--muted:#8d98a8;--accent:#b9d8f5;--green:#69e0a0}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(#101821,#070a0f 40%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
-main{max-width:760px;margin:auto;padding:22px 18px 110px}h1{font-size:28px;letter-spacing:3px;margin:5px 0 2px}h2{font-size:25px;margin:8px 0 18px}.date{color:#aeb7c4;margin-bottom:22px}
-.card{background:rgba(17,22,30,.92);border:1px solid var(--line);border-radius:28px;padding:22px;margin:14px 0;box-shadow:0 10px 30px #0003}.hero{min-height:245px}.label{color:var(--muted);font-size:15px}.big{font-size:58px;font-weight:750;margin:7px 0}.bar{height:13px;background:#202a35;border-radius:20px;overflow:hidden;margin:22px 0 12px}.fill{height:100%;background:#b9d8f5;border-radius:20px}.row{display:flex;justify-content:space-between;gap:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.tile{padding:20px;border:1px solid var(--line);border-radius:25px;background:#11161e}.tile b{font-size:20px}.tile .num{font-size:34px;font-weight:750;margin-top:10px}.muted{color:var(--muted)}
-button,input,select{font:inherit}button{border:1px solid var(--line);background:#151c25;color:var(--text);border-radius:14px;padding:12px 15px}button.primary{background:#dcecff;color:#08101a;border:0;font-weight:700}input,select{width:100%;padding:14px;border-radius:14px;border:1px solid var(--line);background:#0d1219;color:var(--text);margin:7px 0 12px}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#0b0e14f5;border-top:1px solid #1c232d;display:flex;justify-content:center;z-index:5;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}.nav button{border:0;background:transparent;flex:1;max-width:145px;color:#7f8998;padding:8px 3px}.nav button.active{background:#151d27;color:#fff;border-radius:18px}.ico{font-size:23px;display:block}.nav small{font-size:13px}
-.foodstat{font-size:30px;font-weight:750}.meal{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #252d38}.meal:last-child{border-bottom:0}.xp{color:#69e0a0;font-weight:700}.hidden{display:none}
-@media(max-width:430px){main{padding-left:16px;padding-right:16px}.grid{gap:10px}.tile{padding:17px}.big{font-size:52px}}
+:root{--bg:#080b10;--card:#111720;--card2:#161e28;--line:#283340;--text:#f5f7fb;--muted:#8d99a8;--accent:#cfe9ff;--green:#78e3a6;--orange:#ffd166}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -10%,#1b2935,#080b10 42%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
+main{max-width:760px;margin:auto;padding:18px 16px 110px}button,input,select{font:inherit}button{cursor:pointer}
+header{display:flex;justify-content:space-between;align-items:center;padding:8px 2px 16px}.brand{font-size:17px;font-weight:900;letter-spacing:2px}.sub{font-size:12px;color:var(--muted);margin-top:4px}.avatar{width:42px;height:42px;border-radius:14px;background:var(--accent);color:#071019;display:grid;place-items:center;font-weight:900}
+.view{display:none}.view.active{display:block}.hero,.card{background:rgba(17,23,32,.94);border:1px solid var(--line);border-radius:24px;padding:18px;margin:12px 0}.hero{background:linear-gradient(145deg,#16202a,#10161e)}h1{font-size:30px;margin:0 0 6px}.tiny{font-size:12px;color:var(--muted)}.big{font-size:42px;font-weight:850}.row{display:flex;justify-content:space-between;gap:12px;align-items:center}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tile{background:#10161e;border:1px solid var(--line);border-radius:19px;padding:15px}.tile b{font-size:13px}.tile .num{font-size:27px;font-weight:850;margin-top:6px}.progress{height:10px;background:#202a34;border-radius:99px;overflow:hidden;margin:14px 0 8px}.fill{height:100%;background:linear-gradient(90deg,#f5fbff,#8bd3ff);border-radius:99px}.section{font-size:16px;font-weight:800;margin:20px 3px 9px}.btn{background:#e7f5ff;color:#071019;border:0;border-radius:13px;padding:11px 14px;font-weight:800}.btn.secondary{background:#1b232d;color:#fff;border:1px solid var(--line)}.btn.danger{background:#32191e;color:#ffcdd3}.actions{display:flex;gap:8px;flex-wrap:wrap}
+.task{display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line)}.task:last-child{border-bottom:0}.check{width:28px;height:28px;border-radius:9px;border:1px solid #3a4653;background:#0d1218;color:#071019}.check.done{background:#e6f7ff}.done .taskname{text-decoration:line-through;color:#6f7a88}.taskname{font-weight:750}.taskmeta{font-size:11px;color:var(--muted);margin-top:3px}
+.nav{position:fixed;z-index:5;bottom:0;left:0;right:0;background:#090d13ee;backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px 7px calc(8px + env(safe-area-inset-bottom))}.nav button{flex:1;max-width:150px;background:transparent;border:0;color:#778392;border-radius:14px;padding:7px 3px}.nav button.active{background:#17202a;color:#fff}.ico{display:block;font-size:19px}.nav small{font-size:10px}
+input,select{width:100%;background:#0c1117;color:#fff;border:1px solid var(--line);border-radius:12px;padding:11px;margin:5px 0 10px}
+.chart{display:flex;align-items:flex-end;gap:7px;height:140px;padding-top:12px}.barcol{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%}.barcol i{display:block;background:#8bd3ff;border-radius:7px 7px 2px 2px;min-height:3px}.barcol span{text-align:center;font-size:9px;color:var(--muted);margin-top:5px}
+.achievement{display:flex;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}.achievement:last-child{border-bottom:0}.badgeIcon{width:43px;height:43px;border-radius:14px;background:#202a34;display:grid;place-items:center;font-size:21px}.locked{opacity:.35}.achievement b{display:block}.achievement small{color:var(--muted)}
+.exercise{padding:12px 0;border-bottom:1px solid var(--line)}.exercise:last-child{border-bottom:0}.exercise .row{margin-bottom:8px}
+.meal{padding:11px 0;border-bottom:1px solid var(--line)}.meal:last-child{border-bottom:0}
+@media(min-width:700px){.nav{width:760px;left:50%;right:auto;transform:translateX(-50%);border:1px solid var(--line);border-bottom:0;border-radius:20px 20px 0 0}}
 </style>
 </head>
 <body>
-<main id="app"></main>
+<main>
+<header><div><div class="brand">WINTER ARC <span style="color:#8bd3ff">3.2</span></div><div class="sub" id="date"></div></div><div class="avatar" id="avatar">A</div></header>
+
+<section id="home" class="view active"></section>
+<section id="streak" class="view"></section>
+<section id="stats" class="view"></section>
+<section id="food" class="view"></section>
+<section id="workout" class="view"></section>
+<section id="tools" class="view"></section>
+</main>
+
 <nav class="nav">
 <button data-page="home"><span class="ico">⌂</span><small>Home</small></button>
-
 <button data-page="streak"><span class="ico">🔥</span><small>Streak</small></button>
 <button data-page="stats"><span class="ico">◒</span><small>Stats</small></button>
 <button data-page="food"><span class="ico">🥗</span><small>Food</small></button>
+<button data-page="workout"><span class="ico">🏋️</span><small>Workout</small></button>
+<button data-page="tools"><span class="ico">✦</span><small>Tools</small></button>
 </nav>
+
 <script>
-const key='winterArc31';
-let s=JSON.parse(localStorage.getItem(key)||'null')||{day:1,xp:20,streak:1,water:0,tasks:1,calGoal:2200,proteinGoal:150,meals:[]};
-function save(){localStorage.setItem(key,JSON.stringify(s))}
-function mealsTotal(){return s.meals.reduce((a,m)=>({cal:a.cal+Number(m.cal||0),protein:a.protein+Number(m.protein||0)}),{cal:0,protein:0})}
-function page(p){
-document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));
-const d=new Date(), date=d.toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});
-let h='';
-if(p==='home') h=`<h1>WINTER ARC 3.1</h1><div class="date">${date}</div>
-<div class="card hero"><div class="label">DAY</div><div class="big">${s.day} / 90</div><div class="muted">Disziplin ist stärker als Motivation.</div><div class="bar"><div class="fill" style="width:${Math.min(100,s.day/90*100)}%"></div></div><div class="row"><span class="muted">${Math.round(s.day/90*100)}% des Arcs</span><b>${s.xp} XP</b></div></div>
-<div class="grid"><div class="tile">🔥 <b>Streak</b><div class="num">${s.streak}</div><span class="muted">Tage in Folge</span></div><div class="tile">🏆 <b>Level</b><div class="num">${Math.floor(s.xp/100)+1}</div><span class="muted">${s.xp%100} / 100 XP</span></div><div class="tile">💧 <b>Wasser</b><div class="num">${s.water}/8</div><span class="muted">Gläser heute</span></div><div class="tile">🥗 <b>Ernährung</b><div class="num">${mealsTotal().cal}</div><span class="muted">kcal heute</span></div></div>
-<div class="card"><h2>Heute fokussieren</h2><p>Früh aufstehen</p><p>🏋️ Workout</p><p>📚 Fokuszeit</p><button class="primary" onclick="s.xp+=20;s.tasks=Math.min(6,s.tasks+1);save();page('home')">Aufgabe erledigen +20 XP</button></div>`;
-if(p==='food'){let t=mealsTotal();h=`<h1>🥗 ERNÄHRUNG</h1><div class="date">Dein Essen & deine Tagesziele</div>
-<div class="grid"><div class="tile"><span class="muted">Kalorien</span><div class="foodstat">${t.cal}</div><span class="muted">/ ${s.calGoal} kcal</span></div><div class="tile"><span class="muted">Protein</span><div class="foodstat">${t.protein} g</div><span class="muted">/ ${s.proteinGoal} g</span></div></div>
-<div class="card"><h2>➕ Mahlzeit hinzufügen</h2><label class="muted">Mahlzeit</label><select id="type"><option>Frühstück</option><option>Mittagessen</option><option>Abendessen</option><option>Snack</option></select><input id="foodname" placeholder="Was hast du gegessen?"><input id="cal" type="number" placeholder="Kalorien (kcal)"><input id="protein" type="number" placeholder="Protein (g)"><button class="primary" onclick="addMeal()">Mahlzeit speichern +10 XP</button></div>
-<div class="card"><h2>Heute gegessen</h2>${s.meals.length?s.meals.map((m,i)=>`<div class="meal"><div><b>${m.type}</b><br>${m.name}<br><span class="muted">${m.cal} kcal · ${m.protein} g Protein</span></div><button onclick="delMeal(${i})">✕</button></div>`).join(''):'<p class="muted">Noch keine Mahlzeiten eingetragen.</p>'}</div>
-<div class="card"><h2>🎯 Tagesziele</h2><input id="goalcal" type="number" value="${s.calGoal}" placeholder="Kalorienziel"><input id="goalpro" type="number" value="${s.proteinGoal}" placeholder="Proteinziel in g"><button onclick="setGoals()">Ziele speichern</button></div>`}
-if(p==='plan')h=`<h1>📋 TAGESPLAN</h1><div class="date">90 Tage. Ein Tag nach dem anderen.</div><div class="card"><h2>Day ${s.day}</h2><p>☀️ Früh aufstehen</p><p>🏋️ Training</p><p>💧 8 Gläser Wasser</p><p>📚 60 Min Fokus</p><p>🥗 Ernährung tracken</p></div>`;
-if(p==='streak')h=`<h1>🔥 STREAKS</h1><div class="card"><div class="label">AKTUELLER STREAK</div><div class="big">${s.streak} Tage</div><p class="muted">Bleib heute dran, um die Serie fortzusetzen.</p></div>`;
-if(p==='stats')h=`<h1>📊 STATS</h1><div class="grid"><div class="tile"><b>90-Tage-Fortschritt</b><div class="num">${Math.round(s.day/90*100)}%</div></div><div class="tile"><b>XP</b><div class="num">${s.xp}</div></div><div class="tile"><b>Mahlzeiten</b><div class="num">${s.meals.length}</div></div><div class="tile"><b>Aufgaben</b><div class="num">${s.tasks}/6</div></div></div>`;
-document.getElementById('app').innerHTML=h;
+const KEY='winter_arc_32';
+let s=JSON.parse(localStorage.getItem(KEY)||'null')||{
+ name:'',start:new Date().toISOString().slice(0,10),day:1,xp:0,streak:0,water:0,
+ tasks:{wake:false,water:false,read:false,journal:false},meals:[],workouts:[],
+ calGoal:2200,proteinGoal:150
+};
+function save(){localStorage.setItem(KEY,JSON.stringify(s))}
+function esc(x){return String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function totals(){return s.meals.reduce((a,m)=>({cal:a.cal+Number(m.cal||0),pro:a.pro+Number(m.pro||0)}),{cal:0,pro:0})}
+function progress(){return Math.round(Math.min(90,s.day)/90*100)}
+function level(){return Math.floor(s.xp/100)+1}
+function show(p){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===p));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));render();scrollTo(0,0)}
+function task(id,name,meta,xp){let d=!!s.tasks[id];return `<div class="task ${d?'done':''}"><button class="check ${d?'done':''}" onclick="toggleTask('${id}')">${d?'✓':''}</button><div><div class="taskname">${name}</div><div class="taskmeta">${meta} · +${xp} XP</div></div></div>`}
+function render(){
+const dt=new Date();document.getElementById('date').textContent=dt.toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});document.getElementById('avatar').textContent=(s.name||'A')[0].toUpperCase();
+const t=totals(), done=Object.values(s.tasks).filter(Boolean).length, p=progress();
+
+document.getElementById('home').innerHTML=`
+<div class="hero"><div class="tiny">90-TAGE-CHALLENGE</div><h1>DAY ${s.day} / 90</h1><div class="tiny">${p}% deines Arcs</div><div class="progress"><div class="fill" style="width:${p}%"></div></div><div class="row"><b>${s.xp} XP</b><span class="tiny">Level ${level()}</span></div></div>
+<div class="grid">
+<div class="tile">🔥 <b>Streak</b><div class="num">${s.streak}</div><span class="tiny">Tage</span></div>
+<div class="tile">💧 <b>Wasser</b><div class="num">${s.water}/8</div><span class="tiny">Gläser</span></div>
+<div class="tile">🥗 <b>Kalorien</b><div class="num">${t.cal}</div><span class="tiny">/ ${s.calGoal} kcal</span></div>
+<div class="tile">💪 <b>Protein</b><div class="num">${t.pro}g</div><span class="tiny">/ ${s.proteinGoal}g</span></div>
+</div>
+<div class="section">Heute</div><div class="card">${task('wake','Früh aufstehen','Routine',20)}${task('water','8 Gläser Wasser','Hydration',20)}${task('read','20 Min. Lesen','Mindset',20)}${task('journal','Journal','Reflexion',20)}</div>
+<div class="card"><div class="row"><div><b>🏆 Level ${level()}</b><div class="tiny">${s.xp%100} / 100 XP bis zum nächsten Level</div></div><button class="btn secondary" onclick="show('stats')">Dashboard</button></div></div>`;
+
+document.getElementById('streak').innerHTML=`
+<div class="hero"><div class="tiny">CURRENT STREAK</div><div class="big">🔥 ${s.streak}</div><p class="tiny">Dein längster Streak: ${Math.max(s.streak,s.bestStreak||0)} Tage</p></div>
+<div class="section">🏆 Achievements</div><div class="card">${achievement('🔥','3-Tage-Streak','Erreiche 3 Tage',s.streak>=3)}${achievement('⚡','7-Tage-Streak','Erreiche 7 Tage',s.streak>=7)}${achievement('🏆','30-Tage-Streak','Erreiche 30 Tage',s.streak>=30)}${achievement('👑','90-Tage-Arc','Beende alle 90 Tage',s.day>=90)}</div>`;
+
+let week=[];for(let i=0;i<7;i++){let val=Math.round(((s.day-i)/90)*100);week.push(Math.max(4,Math.min(100,val)))} 
+document.getElementById('stats').innerHTML=`
+<div class="hero"><h1>Dashboard</h1><p class="tiny">Deine wichtigsten Werte auf einen Blick.</p></div>
+<div class="grid"><div class="tile"><b>📈 Arc</b><div class="num">${p}%</div><span class="tiny">${s.day}/90 Tage</span></div><div class="tile"><b>🔥 Streak</b><div class="num">${s.streak}</div><span class="tiny">Tage</span></div><div class="tile"><b>🏋️ Workouts</b><div class="num">${s.workouts.length}</div><span class="tiny">gesamt</span></div><div class="tile"><b>🥗 Mahlzeiten</b><div class="num">${s.meals.length}</div><span class="tiny">erfasst</span></div></div>
+<div class="section">📊 7-Tage-Arc</div><div class="card"><div class="chart">${week.map((v,i)=>`<div class="barcol"><i style="height:${v}%"></i><span>${7-i}</span></div>`).join('')}</div></div>
+<div class="section">🏆 Achievements</div><div class="card">${achievement('🥗','Fuel','10 Mahlzeiten tracken',s.meals.length>=10)}${achievement('🏋️','Iron','5 Workouts absolvieren',s.workouts.length>=5)}${achievement('💯','XP Hunter','500 XP sammeln',s.xp>=500)}</div>`;
+
+document.getElementById('food').innerHTML=`
+<div class="hero"><div class="tiny">NUTRITION</div><h1>🥗 Food</h1><p class="tiny">Tracke dein Essen und deine Ziele.</p></div>
+<div class="grid"><div class="tile"><b>🔥 Kalorien</b><div class="num">${t.cal}</div><span class="tiny">/ ${s.calGoal} kcal</span></div><div class="tile"><b>💪 Protein</b><div class="num">${t.pro}g</div><span class="tiny">/ ${s.proteinGoal}g</span></div></div>
+<div class="card"><h2>Mahlzeit hinzufügen</h2><select id="mealType"><option>Frühstück</option><option>Mittagessen</option><option>Abendessen</option><option>Snack</option></select><input id="mealName" placeholder="Was hast du gegessen?"><input id="mealCal" type="number" placeholder="Kalorien (kcal)"><input id="mealPro" type="number" placeholder="Protein (g)"><button class="btn" onclick="addMeal()">Speichern +10 XP</button></div>
+<div class="card"><h2>Heute</h2>${s.meals.length?s.meals.map((m,i)=>`<div class="meal"><b>${esc(m.type)}</b> · ${esc(m.name)}<div class="tiny">${m.cal} kcal · ${m.pro}g Protein <button class="btn danger" onclick="delMeal(${i})">×</button></div></div>`).join(''):'<span class="tiny">Noch keine Mahlzeiten.</span>'}</div>`;
+
+document.getElementById('workout').innerHTML=`
+<div class="hero"><div class="tiny">TRAINING</div><h1>🏋️ Workout</h1><p class="tiny">Baue deine Trainingshistorie auf.</p></div>
+<div class="card"><h2>Workout starten</h2><input id="workoutName" placeholder="z. B. Push Day"><select id="workoutType"><option>Kraft</option><option>Cardio</option><option>Mobility</option><option>Ganzkörper</option></select><button class="btn" onclick="addWorkout()">Workout speichern +50 XP</button></div>
+<div class="section">Historie</div><div class="card">${s.workouts.length?s.workouts.slice().reverse().map((w,i)=>`<div class="exercise"><div class="row"><b>${esc(w.name)}</b><span class="xp">+50 XP</span></div><div class="tiny">${esc(w.type)} · ${esc(w.date)}</div></div>`).join(''):'<span class="tiny">Noch keine Workouts.</span>'}</div>`;
+
+document.getElementById('tools').innerHTML=`
+<div class="hero"><h1>✦ Tools</h1><p class="tiny">Deine persönlichen Einstellungen.</p></div>
+<div class="card"><h2>Profil</h2><input id="name" value="${esc(s.name)}" placeholder="Dein Name"><button class="btn" onclick="saveName()">Speichern</button></div>
+<div class="card"><h2>🎯 Ernährungsziele</h2><input id="cg" type="number" value="${s.calGoal}" placeholder="Kalorienziel"><input id="pg" type="number" value="${s.proteinGoal}" placeholder="Proteinziel (g)"><button class="btn" onclick="saveGoals()">Ziele speichern</button></div>
+<div class="card"><h2>💾 Daten</h2><div class="actions"><button class="btn secondary" onclick="exportData()">Export</button><button class="btn danger" onclick="resetData()">Reset</button></div></div>`;
 }
-function addMeal(){let name=document.getElementById('foodname').value.trim();if(!name)return; s.meals.push({type:document.getElementById('type').value,name,cal:Number(document.getElementById('cal').value||0),protein:Number(document.getElementById('protein').value||0)});s.xp+=10;save();page('food')}
-function delMeal(i){s.meals.splice(i,1);save();page('food')}
-function setGoals(){s.calGoal=Number(document.getElementById('goalcal').value||2200);s.proteinGoal=Number(document.getElementById('goalpro').value||150);save();page('food')}
-document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>page(b.dataset.page));
-page('home');
-if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+function achievement(icon,title,desc,ok){return `<div class="achievement ${ok?'':'locked'}"><div class="badgeIcon">${icon}</div><div><b>${title}</b><small>${desc}${ok?' · ✓ geschafft':''}</small></div></div>`}
+function toggleTask(id){s.tasks[id]=!s.tasks[id];s.xp+=s.tasks[id]?20:-20;save();render()}
+function addMeal(){let n=document.getElementById('mealName').value.trim();if(!n)return; s.meals.push({type:document.getElementById('mealType').value,name:n,cal:Number(document.getElementById('mealCal').value||0),pro:Number(document.getElementById('mealPro').value||0)});s.xp+=10;save();render()}
+function delMeal(i){s.meals.splice(i,1);save();render()}
+function addWorkout(){let n=document.getElementById('workoutName').value.trim();if(!n)return;s.workouts.push({name:n,type:document.getElementById('workoutType').value,date:new Date().toLocaleDateString('de-DE')});s.xp+=50;save();render()}
+function saveName(){s.name=document.getElementById('name').value.trim();save();render()}
+function saveGoals(){s.calGoal=Number(document.getElementById('cg').value||2200);s.proteinGoal=Number(document.getElementById('pg').value||150);save();render()}
+function exportData(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(s,null,2)],{type:'application/json'}));a.download='winter-arc-3.2-backup.json';a.click()}
+function resetData(){if(confirm('Alle Daten löschen?')){localStorage.removeItem(KEY);location.reload()}}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.page));save();render();
 </script>
-</body>
-</html>
+</body></html>
