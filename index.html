@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>WINTER ARC</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080a0f;color:#f4f7fb;font-family:Inter,system-ui,-apple-system,sans-serif}
+button{font:inherit}.app{max-width:720px;margin:auto;min-height:100vh;padding-bottom:92px}
+.top{padding:20px 18px 10px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:rgba(8,10,15,.88);backdrop-filter:blur(14px);z-index:5}
+.brand{font-weight:900;letter-spacing:.16em}.brand i{color:#a8dcff;font-style:normal}.date{font-size:12px;color:#8994a4}
+main{padding:8px 16px}.screen{display:none}.screen.on{display:block}.hero{padding:28px 4px 18px}
+.eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:#a8dcff;font-weight:800}
+.hero h1{font-size:45px;line-height:.95;letter-spacing:-.05em;margin:10px 0}.muted{color:#8994a4}
+.card{background:linear-gradient(145deg,#12161f,#0e1118);border:1px solid #252e3a;border-radius:20px;padding:18px;margin-bottom:14px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.big{font-size:35px;font-weight:900}
+.progress{height:9px;border-radius:99px;background:#222a35;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#8bcfff,#d5f4ff);width:0;transition:.3s}
+.task{display:flex;gap:12px;align-items:center;padding:15px 0;border-bottom:1px solid #252e3a;cursor:pointer}.task:last-child{border:0}
+.check{width:24px;height:24px;border:1px solid #485568;border-radius:8px;display:grid;place-items:center}.done .check{background:#a8e6c1;color:#07100c;border-color:#a8e6c1}.done .name{text-decoration:line-through;color:#7d8796}
+.btn{border:1px solid #303a48;background:#171c25;color:#f4f7fb;padding:11px 14px;border-radius:12px;cursor:pointer}.primary{background:#a8dcff;color:#071017;border-color:#a8dcff;font-weight:800}
+.days{display:grid;grid-template-columns:repeat(15,1fr);gap:5px;margin-top:14px}.day{aspect-ratio:1;background:#202732;border-radius:5px}.day.done{background:#a8dcff}.day.now{outline:2px solid #fff;outline-offset:1px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stat{font-size:27px;font-weight:900}.label{font-size:12px;color:#8994a4;margin-top:3px}
+.barrow{height:100px;display:flex;align-items:end;gap:5px}.bar{flex:1;background:#29313d;border-radius:5px 5px 2px 2px}.bar.hot{background:#a8dcff}
+.nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:min(680px,calc(100% - 24px));padding:7px;background:rgba(18,22,31,.94);border:1px solid #2a3441;border-radius:18px;display:flex;z-index:10;backdrop-filter:blur(15px)}
+.nav button{flex:1;background:none;border:0;color:#8994a4;padding:10px 4px;border-radius:12px;font-size:12px}.nav button.on{background:#222a35;color:#fff}
+.note{font-size:12px;line-height:1.5}@media(max-width:520px){.hero h1{font-size:39px}.grid{grid-template-columns:1fr}.days{grid-template-columns:repeat(10,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="top"><div class="brand">WINTER <i>ARC</i></div><div class="date" id="date"></div></div>
+<main>
+<section class="screen on" id="home">
+<div class="hero"><div class="eyebrow">Day <b id="day">1</b> / 90</div><h1>Build quietly.<br>Become loudly.</h1><div class="muted">Dein 90-Tage-System für Fokus, Bewegung, Lernen und Reflexion.</div></div>
+<div class="card"><div class="row"><div><b>90-Tage-Fortschritt</b><div class="muted" style="font-size:12px;margin-top:4px">Langfristig denken. Heute handeln.</div></div><b id="pct">1%</b></div><div class="progress" style="margin-top:15px"><div class="fill" id="arcFill"></div></div><div class="days" id="days"></div></div>
+<div class="grid"><div class="card"><div class="stat" id="streak">0</div><div class="label">Streak-Tage</div></div><div class="card"><div class="stat" id="cons">0%</div><div class="label">Konsistenz</div></div></div>
+<div class="card"><div class="row"><b>Heute</b><span class="muted" id="count">0 / 4</span></div><div id="homeTasks"></div></div>
+<button class="btn primary" style="width:100%" onclick="show('plan')">Tagesplan öffnen →</button>
+</section>
+
+<section class="screen" id="plan">
+<div class="hero"><div class="eyebrow">Daily Plan</div><h1>Heute zählt.</h1><div class="muted">Vier sinnvolle Aufgaben. Kein Perfektionsdruck.</div></div>
+<div class="card"><div class="row"><b>Deine Kernziele</b><button class="btn" onclick="resetDay()">Zurücksetzen</button></div><div id="tasks"></div>
+<div style="margin-top:15px"><div class="row"><span class="muted" style="font-size:12px">Tagesfortschritt</span><b id="taskPct">0%</b></div><div class="progress" style="margin-top:8px"><div class="fill" id="taskFill"></div></div></div></div>
+<div class="card"><b>Abend-Check</b><p class="muted note">Was lief heute gut? Was ist morgen der eine wichtigste Schritt?</p><button class="btn" onclick="saveReflection()">Reflexion speichern</button></div>
+</section>
+
+<section class="screen" id="streaks">
+<div class="hero"><div class="eyebrow">Consistency</div><h1>Momentum.</h1><div class="muted">Eine verpasste Aufgabe löscht nicht deinen bisherigen Fortschritt.</div></div>
+<div class="grid"><div class="card"><div class="stat" id="s1">0</div><div class="label">Aktuelle Streak</div></div><div class="card"><div class="stat">7</div><div class="label">Bestwert</div></div></div>
+<div class="card"><b>Letzte 14 Tage</b><div class="barrow" id="bars" style="margin-top:15px"></div></div>
+</section>
+
+<section class="screen" id="stats">
+<div class="hero"><div class="eyebrow">Analytics</div><h1>Deine Zahlen.</h1><div class="muted">Fortschritt sichtbar machen, ohne dich daran zu messen.</div></div>
+<div class="grid"><div class="card"><div class="stat" id="allTasks">0</div><div class="label">Aufgaben erledigt</div></div><div class="card"><div class="stat" id="daysDone">0 / 90</div><div class="label">Arc-Tage</div></div></div>
+<div class="card"><div class="row"><b>90-Tage-Arc</b><b id="spct">1%</b></div><div class="progress" style="margin-top:14px"><div class="fill" id="sfill"></div></div><p class="muted note">Der Maßstab ist dein eigener Fortschritt.</p></div>
+<div class="card"><b>Design-Prinzip</b><p class="muted note">Keine extremen Regeln, kein „alles oder nichts“. Das Ziel ist eine nachhaltige Routine.</p></div>
+</section>
+</main>
+<nav class="nav"><button class="on" data-s="home">⌂<br>Start</button><button data-s="plan">✓<br>Plan</button><button data-s="streaks">🔥<br>Streaks</button><button data-s="stats">◒<br>Stats</button></nav>
+</div>
+<script>
+const K='winterArcV2';let S=JSON.parse(localStorage.getItem(K)||'{"tasks":[false,false,false,false],"days":0,"reflections":0}');
+const N=['30 Min. Lernen','Bewegung / Sport','10 Seiten lesen','Abendlicher Check-in'],D=['Fokusblock ohne Ablenkung','Etwas Bewegung, das dir guttut','Offline-Zeit für deinen Kopf','Kurz reflektieren und morgen planen'];
+document.getElementById('date').textContent=new Date().toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'});
+function save(){localStorage.setItem(K,JSON.stringify(S))}
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('on',x.id===id));document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('on',x.dataset.s===id))}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.s));
+function toggle(i){S.tasks[i]=!S.tasks[i];save();render()}
+function resetDay(){S.tasks=[false,false,false,false];save();render()}
+function saveReflection(){S.reflections++;save();alert('Reflexion gespeichert.')}
+function render(){
+ const done=S.tasks.filter(Boolean).length,p=Math.max(1,Math.round(S.days/90*100));
+ document.getElementById('day').textContent=Math.min(90,S.days+1);document.getElementById('pct').textContent=p+'%';document.getElementById('arcFill').style.width=p+'%';
+ document.getElementById('streak').textContent=S.days;document.getElementById('s1').textContent=S.days;document.getElementById('cons').textContent=Math.round(S.days/Math.max(1,S.days+1)*100)+'%';
+ document.getElementById('count').textContent=done+' / 4';document.getElementById('taskPct').textContent=Math.round(done/4*100)+'%';document.getElementById('taskFill').style.width=done/4*100+'%';
+ document.getElementById('allTasks').textContent=S.days*4+done;document.getElementById('daysDone').textContent=S.days+' / 90';document.getElementById('spct').textContent=p+'%';document.getElementById('sfill').style.width=p+'%';
+ document.getElementById('days').innerHTML=Array.from({length:90},(_,i)=>`<div class="day ${i<S.days?'done':''} ${i===S.days?'now':''}></div>`).join('');
+ const tasks=N.map((n,i)=>`<div class="task ${S.tasks[i]?'done':''}" onclick="toggle(${i})"><div class="check">${S.tasks[i]?'✓':''}</div><div><b class="name">${n}</b><div class="muted" style="font-size:11px;margin-top:3px">${D[i]}</div></div></div>`).join('');
+ document.getElementById('tasks').innerHTML=tasks;document.getElementById('homeTasks').innerHTML=tasks;
+ document.getElementById('bars').innerHTML=Array.from({length:14},(_,i)=>`<div class="bar ${i>=14-Math.min(14,S.days)?'hot':''}" style="height:${20+(i*23)%75}%"></div>`).join('');
+ if(done===4 && !S.asked){S.asked=true;save();setTimeout(()=>{if(confirm('Alle 4 Aufgaben sind erledigt. Tag abschließen?')){S.days=Math.min(90,S.days+1);S.tasks=[false,false,false,false];S.asked=false;save();render()}else{S.asked=false;save()}},100)}
+}
+render();
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));
+</script>
+</body></html>
