@@ -1,2 +1,2 @@
-# WINTER ARC 3.2
-Neue Features: Achievements, Dashboard mit 7-Tage-Übersicht, Workout-Tracker. Food, Streaks, XP, 90-Tage-Arc und Tools bleiben erhalten.
+# WINTER ARC 3.3
+Smart Food Tracker: Suche nach Lebensmitteln über Open Food Facts, Auswahl eines Ergebnisses, Gramm/ml eingeben und Kalorien/Protein werden automatisch für die Menge berechnet. Manueller Eintrag bleibt verfügbar.
